@@ -1,14 +1,15 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using System.Runtime.Serialization;
 
-namespace RPAMicroServices
+namespace RPA
 {
     [DataContract]
-    public partial class Ticket
+    public partial class RPATicket
     {
         [DataMember]
         public String TicketId { get; set; }
@@ -17,15 +18,21 @@ namespace RPAMicroServices
         public String TicketNumber { get; set; }
 
         [DataMember]
+        public List<String> Categories { get; set; }
+
+        [DataMember]
+        public List<RPAResult> Matches { get; set; }
+
+        [DataMember]
         public String TicketTitle { get; set; }
 
         [DataMember]
         public String TicketDescription { get; set; }
 
-        //[DataMember]
-        //  public SortedList TicketCategories { get; set; }
-
         [DataMember]
         public String userID { get; set; }
+
+        [DataMember]
+        public String Error { get; set; }
     }
 }

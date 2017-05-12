@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
+using RPA;
 
 namespace SimpleBrokeredMessaging
 {
@@ -19,12 +21,13 @@ namespace SimpleBrokeredMessaging
             Console.WriteLine("QClient created!");
             Console.WriteLine();
 
-            RPAMicroServices.Ticket ticket = new RPAMicroServices.Ticket()
+            RPATicket ticket = new RPATicket()
             {
-                TicketId = "111",
+                TicketId = "",
                 TicketNumber = "222",
-                TicketTitle = "a lazy dog",
-                TicketDescription = "jumps over",
+                TicketTitle = "Please change my password",
+                TicketDescription = "Please reset my pw for user id 608847",
+                Categories = new List<string>{ "pass", "word" ,"remote"},
                 userID = "608847"
             };
 
@@ -35,10 +38,14 @@ namespace SimpleBrokeredMessaging
 
             // Send the message to the queue.
             queueClient.Send(ticketInMsg);
-
+            
             Console.WriteLine("Done!");
+            
+            System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(ticket.GetType());
+            x.Serialize(Console.Out, ticket);
             Console.WriteLine();
-
+            Thread.Sleep(1000);
+           // Console.ReadLine();
         }
     }
 }
